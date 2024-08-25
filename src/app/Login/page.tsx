@@ -15,7 +15,7 @@ const Login = () => {
     const [error, setError] = useState("");
     const router = useRouter();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
         signInWithEmailAndPassword(auth, email, password)
