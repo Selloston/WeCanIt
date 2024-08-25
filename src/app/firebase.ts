@@ -16,5 +16,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // الحصول على المثيلات المختلفة
+export {app}
 export const auth = getAuth(app);
-export const storage = getStorage(app); // إضافة تصدير Firebase Storage
+export const storage = getStorage(app);// إضافة تصدير Firebase Storage
