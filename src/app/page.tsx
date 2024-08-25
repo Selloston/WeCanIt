@@ -1,19 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth'; // تأكد من استيراد User
 import { auth } from "@/app/firebase"; // تأكد من أن المسار صحيح
 import { Header, Container } from './components/index';
 
 const App = () => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null); // تحديد نوع الحالة كـ User أو null
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setUser(user);
+                setUser(user); // user هو من نوع User
             } else {
-                setUser(null);
+                setUser(null); // null يتطابق مع النوع المحدد
             }
         });
 

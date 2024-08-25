@@ -1,13 +1,15 @@
-'use client';
-
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
 import { auth } from '@/app/firebase'; // تأكد من المسار الصحيح
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 import './Header.css';
 
-const Header: React.FC = () => {
-    const [user, setUser] = useState<User | null>(null);
+interface HeaderProps {
+    user: User | null;
+    onLogout: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -15,7 +17,7 @@ const Header: React.FC = () => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setUser(user);
+            setUser(user); // ليس هناك حاجة لاستدعاء `setUser` هنا لأن `user` الآن يأتي من الخصائص.
         });
 
         return () => unsubscribe();
@@ -37,6 +39,7 @@ const Header: React.FC = () => {
     const handleLogout = async () => {
         try {
             await signOut(auth);
+            onLogout(); // استدعاء الدالة onLogout التي تمررها كخاصية
         } catch (error) {
             console.error('Sign out error:', (error as Error).message);
         }
