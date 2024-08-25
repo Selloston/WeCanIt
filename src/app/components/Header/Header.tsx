@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
-import { auth } from '@/app/firebase'; // تأكد من المسار الصحيح
-import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { User } from 'firebase/auth';
 import './Header.css';
 
 interface HeaderProps {
@@ -10,18 +9,11 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
+    // قم بإزالة useState و useEffect لأنك ستتلقى user كخاصية
     const [inputValue, setInputValue] = useState<string>('');
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setUser(user); // ليس هناك حاجة لاستدعاء `setUser` هنا لأن `user` الآن يأتي من الخصائص.
-        });
-
-        return () => unsubscribe();
-    }, []);
 
     const handleDelet = () => {
         if (inputValue !== '') {
@@ -34,15 +26,6 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
 
     const handleClickMenu = () => {
         setIsMenuOpen(!isMenuOpen);
-    };
-
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            onLogout(); // استدعاء الدالة onLogout التي تمررها كخاصية
-        } catch (error) {
-            console.error('Sign out error:', (error as Error).message);
-        }
     };
 
     return (
@@ -85,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
                                 className="profile-image"
                             />
                         </Link>
-                        <button onClick={handleLogout} className="logout-button">Logout</button>
+                        <button onClick={onLogout} className="logout-button">Logout</button>
                     </div>
                 ) : (
                     <Link className="Link" href="/Login">
