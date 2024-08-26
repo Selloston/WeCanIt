@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage'; // إضافة استيراد Firebase Storage
+import { getFirestore } from 'firebase/firestore';
 
 // أدخل تفاصيل إعدادات Firebase الخاصة بك هنا
 const firebaseConfig = {
@@ -14,8 +15,10 @@ const firebaseConfig = {
 
 // تهيئة Firebase
 const app = initializeApp(firebaseConfig);
+const firestore = getFirestore(app); // إعداد Firestore
 
 // الحصول على المثيلات المختلفة
-export {app}
+export { firestore };
+export { app };
 export const auth = getAuth(app);
-export const storage = getStorage(app);// إضافة تصدير Firebase Storage
+export const storage = getStorage(app); // إضافة تصدير Firebase Storage
