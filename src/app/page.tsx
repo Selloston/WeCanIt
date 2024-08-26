@@ -24,7 +24,7 @@ const App = () => {
     const handleLogout = () => {
         signOut(auth).then(() => {
             // إعادة توجيه إلى الصفحة الرئيسية بعد تسجيل الخروج
-            window.location.href = '/';
+            window.location.href = '/WeCanIt';
         }).catch((error) => {
             console.error('Sign out error:', error.message);
         });
