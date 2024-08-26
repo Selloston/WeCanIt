@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { User } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { signOut } from 'firebase/auth'; // استيراد دالة تسجيل الخروج
-import { auth } from '../firebase'; // تأكد من أن هذا المسار صحيح
+import { auth } from '@/app/firebase'; // تأكد من أن هذا المسار صحيح
 import './Header.css';
 
 interface HeaderProps {
