@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth } from '../firebase'; // تأكد من المسار الصحيح
 import { updateProfile } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebase'; // تأكد من المسار الصحيح
+import Link from 'next/link';
 
 const Profile: React.FC = () => {
     const user = auth.currentUser;
@@ -88,6 +89,7 @@ const Profile: React.FC = () => {
                 </label>
                 <button onClick={handleUpdateProfile}>Update Profile</button>
                 {error && <p className="error">{error}</p>}
+                <Link href="/WeCanIt" className='Link'>Back</Link>
             </div>
         </div>
     );
