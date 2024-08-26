@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { User } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import { signOut } from 'firebase/auth'; // استيراد دالة تسجيل الخروج
+import { auth } from '../firebase'; // تأكد من أن هذا المسار صحيح
 import './Header.css';
 
 interface HeaderProps {
@@ -14,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
-    const router = useRouter(); // استخدام useRouter
+    const router = useRouter();
 
     const handleDelet = () => {
         if (inputValue !== '') {
@@ -29,9 +31,15 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const handleLogout = () => {
-        onLogout();
-        router.push('/WeCanIt'); // توجيه المستخدم إلى الصفحة المحددة بعد تسجيل الخروج
+    const handleLogout = async () => {
+        try {
+            // تنفيذ عملية تسجيل الخروج
+            await signOut(auth);
+            onLogout(); // تنفيذ أي إجراءات بعد تسجيل الخروج
+            router.push('/WeCanIt'); // توجيه المستخدم إلى الصفحة المحددة بعد تسجيل الخروج
+        } catch (error) {
+            console.error("Error signing out: ", error);
+        }
     };
 
     return (
