@@ -31,7 +31,7 @@ const Page = () => {
                 const user = userCredential.user;
                 console.log("User signed up:", user);
                 setError(""); // Clear any previous errors
-                router.push('/');
+                router.push('/WeCanIt');
                 // ...
             })
             .catch((error) => {
