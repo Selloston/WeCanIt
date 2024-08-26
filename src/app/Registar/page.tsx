@@ -16,7 +16,6 @@ const Page = () => {
     const [error, setError] = useState("");
     const router = useRouter();
     
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
@@ -31,14 +30,12 @@ const Page = () => {
                 const user = userCredential.user;
                 console.log("User signed up:", user);
                 setError(""); // Clear any previous errors
-                router.push('/WeCanIt');
-                // ...
+                router.push('/WeCanIt'); // توجيه المستخدم إلى الصفحة المطلوبة
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 setError(errorMessage);
-                // ...
             });
     }
 
