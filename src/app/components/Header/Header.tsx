@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { User } from 'firebase/auth';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth'; // استيراد دالة تسجيل الخروج
 import { auth } from '@/app/firebase'; // تأكد من أن هذا المسار صحيح
 import './Header.css';
