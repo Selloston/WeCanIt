@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth'; // تأكد من استيراد User
 import { auth } from "@/app/firebase"; // تأكد من أن المسار صحيح
 import { Header, Container } from './components/index';
+import "./page.module.css"
 
 const App = () => {
     const [user, setUser] = useState<User | null>(null); // تحديد نوع الحالة كـ User أو null

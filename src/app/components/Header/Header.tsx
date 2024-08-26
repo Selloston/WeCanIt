@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { User } from 'firebase/auth';
+import { useRouter } from 'next/router';
 import './Header.css';
 
 interface HeaderProps {
@@ -9,11 +10,11 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
-    // قم بإزالة useState و useEffect لأنك ستتلقى user كخاصية
     const [inputValue, setInputValue] = useState<string>('');
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
+    const router = useRouter(); // استخدام useRouter
 
     const handleDelet = () => {
         if (inputValue !== '') {
@@ -26,6 +27,11 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
 
     const handleClickMenu = () => {
         setIsMenuOpen(!isMenuOpen);
+    };
+
+    const handleLogout = () => {
+        onLogout();
+        router.push('/WeCanIt'); // توجيه المستخدم إلى الصفحة المحددة بعد تسجيل الخروج
     };
 
     return (
@@ -68,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
                                 className="profile-image"
                             />
                         </Link>
-                        <button onClick={onLogout} className="logout-button">Logout</button>
+                        <button onClick={handleLogout} className="logout-button">Logout</button>
                     </div>
                 ) : (
                     <Link className="Link" href="/Login">
