@@ -4,12 +4,19 @@ import { useState, useEffect } from 'react';
 import { auth, firestore, storage } from '../firebase';
 import { updateProfile } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
+import { User } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { signOut } from 'firebase/auth'; 
 import { onAuthStateChanged } from 'firebase/auth';
 import Link from 'next/link';
 
-const Profile: React.FC = () => {
+interface ProfilProps {
+    users: User | null;
+    onLogout: () => void;
+}
+
+const Profile: React.FC<ProfilProps> = ({ users ,onLogout }) => {
     const [user, setUser] = useState<any>(null);
     const [newDisplayName, setNewDisplayName] = useState<string>('');
     const [photoURL, setPhotoURL] = useState<string>('https://via.placeholder.com/150');
@@ -91,6 +98,16 @@ const Profile: React.FC = () => {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            // تنفيذ عملية تسجيل الخروج
+            await signOut(auth); // تنفيذ أي إجراءات بعد تسجيل الخروج
+            router.push('/'); // توجيه المستخدم إلى الصفحة المحددة بعد تسجيل الخروج
+        } catch (error) {
+            console.error("Error signing out: ", error);
+        }
+    };
+
     return (
         <div>
             <h1>Profile</h1>
@@ -119,6 +136,7 @@ const Profile: React.FC = () => {
                 </label>
                 <button onClick={handleUpdateProfile}>Update Profile</button>
                 {error && <p className="error">{error}</p>}
+                <button onClick={handleLogout} className="logout-button">Logout</button>
                 <Link href="/WeCanIt" className='Link'>Back</Link>
             </div>
         </div>

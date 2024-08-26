@@ -30,18 +30,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
     const handleClickMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-
-    const handleLogout = async () => {
-        try {
-            // تنفيذ عملية تسجيل الخروج
-            await signOut(auth);
-            onLogout(); // تنفيذ أي إجراءات بعد تسجيل الخروج
-            router.push('/WeCanIt'); // توجيه المستخدم إلى الصفحة المحددة بعد تسجيل الخروج
-        } catch (error) {
-            console.error("Error signing out: ", error);
-        }
-    };
-
+    
     return (
         <>
             <div className="Header">
@@ -82,7 +71,6 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
                                 className="profile-image"
                             />
                         </Link>
-                        <button onClick={handleLogout} className="logout-button">Logout</button>
                     </div>
                 ) : (
                     <Link className="Link" href="/Login">
